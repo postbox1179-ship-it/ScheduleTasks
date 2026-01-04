@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 20px 0;
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: 600;
+      letter-spacing: 1px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    main {
+      width: 90%;
+      max-width: 1000px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin: 40px 0;
+    }
+
+    .card {
+      background: #fff;
+      color: #333;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card h3 {
+      margin: 0;
+      color: #444;
+      text-align: center;
+    }
+
+    .task-item {
+      background: #f7f7f7;
+      padding: 10px 12px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 5px solid #2575fc;
+      margin-bottom: 8px;
+    }
+
+    .task-info {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
+      overflow-wrap: break-word;
+    }
+
+    .task-info span {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .task-info small {
+      color: #888;
+      font-size: 0.8em;
+    }
+
+    .progress-bar {
+      height: 10px;
+      border-radius: 5px;
+      background: #ddd;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress {
+      height: 100%;
+      background: #2575fc;
+      width: 40%; /* placeholder progress */
+      transition: width 0.3s ease;
+    }
+
+    .view-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      background: #2575fc;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+
+    .view-link:hover {
+      background: #1b5edc;
+    }
+
+    footer {
+      color: #ddd;
+      font-size: 0.85em;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>📋 Task Dashboard</header>
+
+  <main>
+    <div class="card" id="due-tasks">
+      <h3>🕒 Due Tasks</h3>
+    </div>
+    <div class="card" id="inprogress-tasks">
+      <h3>⚙️ In Progress</h3>
+    </div>
+    <div class="card" id="completed-tasks">
+      <h3>✅ Completed Tasks</h3>
+    </div>
+  </main>
+
+  <a href="taskscheduler.html" class="view-link">➕ Add or Manage Tasks</a>
+
+  <footer>© 2025 Task Scheduler — Built by Yuvan</footer>
+  <script src="schedulerdashboard.js"></script>
+</body>
+</html>
