@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Scheduler</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 20px 0;
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: 600;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    main {
+      width: 90%;
+      max-width: 900px;
+      margin: 30px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    /* Input Card */
+    .input-card {
+      background: #fff;
+      color: #333;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+    }
+
+    .task-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .task-input input {
+      flex: 1;
+      min-width: 180px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 2px solid #ddd;
+      outline: none;
+    }
+
+    .task-input input:focus {
+      border-color: #2575fc;
+    }
+
+    .task-input button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 10px;
+      background: #2575fc;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .task-input button:hover {
+      background: #1b5edc;
+    }
+
+    /* Task List */
+    .task-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .task-item {
+      background: #fff;
+      color: #333;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+      border-left: 5px solid #2575fc;
+    }
+
+    .task-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .task-info span {
+      font-weight: 600;
+      font-size: 1.05em;
+    }
+
+    .task-info small {
+      color: #777;
+      font-size: 0.8em;
+    }
+
+    .task-status {
+      margin-top: 6px;
+      font-size: 0.75em;
+      padding: 3px 8px;
+      border-radius: 8px;
+      color: #fff;
+      width: fit-content;
+    }
+
+    .status-pending { background: #ff9800; }
+    .status-in-progress { background: #2196f3; }
+    .status-completed { background: #4caf50; }
+
+    .task-actions button {
+      background: none;
+      border: none;
+      font-size: 1.3em;
+      cursor: pointer;
+    }
+
+    /* Progress */
+    .progress-bar {
+      height: 10px;
+      background: #e0e0e0;
+      border-radius: 6px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background: #2575fc;
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    /* Subtasks */
+    .subtask-section {
+      margin-top: 12px;
+      padding-left: 10px;
+      border-left: 2px dashed #ddd;
+    }
+
+    .subtask-item {
+      background: #f5f6fa;
+      border-radius: 8px;
+      padding: 6px 10px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .subtask-text {
+      font-size: 0.9em;
+    }
+
+    .add-subtask-btn {
+      margin-top: 8px;
+      border: none;
+      background: #2575fc;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85em;
+    }
+
+    /* Submit Button */
+    #submitBtn {
+      align-self: center;
+      padding: 12px 25px;
+      background: #4caf50;
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    #submitBtn:hover {
+      background: #388e3c;
+    }
+    /* Header button (desktop) */
+header {
+  position: relative;
+}
+
+.nav-dashboard {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #2575fc;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.nav-dashboard:hover {
+  background: #1b5edc;
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Floating action button (mobile) */
+.nav-fab {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #2575fc;
+  color: #fff;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 1.4em;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  transition: background 0.3s, transform 0.2s;
+}
+
+.nav-fab:hover {
+  background: #1b5edc;
+  transform: scale(1.1);
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .nav-dashboard {
+    display: none; /* hide header button on mobile */
+  }
+}
+
+@media (min-width: 769px) {
+  .nav-fab {
+    display: none; /* hide FAB on desktop */
+  }
+}
+
+  </style>
+</head>
+
+<body>
+  <header>🗓 Task Scheduler
+    <a href="schedulerdashboard.html" class="nav-dashboard">📋 Task Dashboard</a>
+  </header>
+
+  <main>
+    <div class="input-card">
+      <div class="task-input">
+        <input type="text" id="taskInput" placeholder="Enter task or subtask..." />
+        <input type="date" id="dateInput" />
+        <button id="addBtn">Add</button>
+      </div>
+    </div>
+
+    <ul id="taskList" class="task-list"></ul>
+
+    <button id="submitBtn">Save Tasks</button>
+  </main>
+<a href="schedulerdashboard.html" class="nav-fab" title="Go to Dashboard">🏠</a>
+
+  <script src="taskscheduler.js"></script>
+</body>
+</html>
